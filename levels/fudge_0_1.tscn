@@ -1,9 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://chvkfwrmwr2gv"]
+[gd_scene load_steps=28 format=3 uid="uid://chvkfwrmwr2gv"]
 
 [ext_resource type="Material" uid="uid://bvl7n0x276t7w" path="res://textures/fudge01.tres" id="1_c8tju"]
 [ext_resource type="Texture2D" uid="uid://cpieiwkn583vs" path="res://textures/star-string.png" id="1_pul2g"]
 [ext_resource type="PackedScene" uid="uid://djeh0pk8ilfap" path="res://models/fudge-clock-modern.glb" id="2_77hqf"]
+[ext_resource type="AudioStream" uid="uid://co8n578a08vre" path="res://sounds/clock-tick.mp3" id="3_vh1de"]
 [ext_resource type="PackedScene" uid="uid://cfa6ufwcgacdc" path="res://models/fudge-bench-wooden.glb" id="4_1cmgq"]
+[ext_resource type="Script" uid="uid://dfhofn452016d" path="res://game/water.gd" id="6_8qtdo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pul2g"]
 size = Vector3(20, 1, 20)
@@ -36,6 +38,25 @@ uv1_triplanar_sharpness = 0.732043
 uv1_world_triplanar = true
 texture_filter = 0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_8qtdo"]
+size = Vector3(20, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ty37t"]
+size = Vector3(20, 1, 10)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_iljmh"]
+load_path = "res://.godot/imported/Untitled453_20250731144208.png-d953388d3281d353f969843d69ca1b29.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vy7nx"]
+diffuse_mode = 3
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = SubResource("CompressedTexture2D_iljmh")
+uv1_scale = Vector3(29.575, 9.59, 64)
+uv1_triplanar_sharpness = 0.732043
+uv1_world_triplanar = true
+texture_filter = 0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_c8tju"]
 size = Vector3(10, 1, 23)
 
@@ -63,6 +84,18 @@ texture_filter = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vh1de"]
 size = Vector3(4.79, 1, 1.48)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ty37t"]
+size = Vector3(20, 6, 22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8qtdo"]
+size = Vector3(20, 6, 22)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ty37t"]
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(0.19774106, 0.22844827, 0.29816586, 0.19607843)
 
 [node name="Fudge0_1" type="Node3D"]
 
@@ -283,6 +316,36 @@ shape = SubResource("BoxShape3D_pul2g")
 mesh = SubResource("BoxMesh_77hqf")
 surface_material_override/0 = ExtResource("1_c8tju")
 
+[node name="StaticBody3D26" type="StaticBody3D" parent="Room1"]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, 7.4214563, 8.194435, -11.812182)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room1/StaticBody3D26"]
+shape = SubResource("BoxShape3D_8qtdo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room1/StaticBody3D26"]
+mesh = SubResource("BoxMesh_ty37t")
+surface_material_override/0 = SubResource("StandardMaterial3D_vy7nx")
+
+[node name="StaticBody3D27" type="StaticBody3D" parent="Room1"]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -7.66076, 8.194435, -11.812182)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room1/StaticBody3D27"]
+shape = SubResource("BoxShape3D_8qtdo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room1/StaticBody3D27"]
+mesh = SubResource("BoxMesh_ty37t")
+surface_material_override/0 = SubResource("StandardMaterial3D_vy7nx")
+
+[node name="StaticBody3D28" type="StaticBody3D" parent="Room1"]
+transform = Transform3D(1, -4.3711392e-08, -4.371139e-08, -4.3711392e-08, -4.3711385e-08, -1, 4.371139e-08, 1, -4.371139e-08, 0.27475643, 9.269951, -11.641857)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room1/StaticBody3D28"]
+shape = SubResource("BoxShape3D_8qtdo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room1/StaticBody3D28"]
+mesh = SubResource("BoxMesh_ty37t")
+surface_material_override/0 = SubResource("StandardMaterial3D_vy7nx")
+
 [node name="StaticBody3D5" type="StaticBody3D" parent="Room1"]
 transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 0.7071067, -0.7071068, 3.090862e-08, 0.7071068, 0.7071067, -3.090862e-08, -0.009608269, 13.70981, -8.289926)
 
@@ -349,11 +412,23 @@ shadow_enabled = true
 spot_range = 61.416687
 spot_angle = 67.70339
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Room1"]
+transform = Transform3D(1, 0, 0, 0, 0.017208042, 0.99985194, 0, -0.99985194, 0.017208042, 0, 29.077059, -15.217667)
+shadow_enabled = true
+
 [node name="Deco" type="Node3D" parent="Room1"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 11.980286, -10.789215)
 
-[node name="fudge-clock-modern" parent="Room1/Deco" instance=ExtResource("2_77hqf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1773005, 6.6006165)
+[node name="fudge-clock-modern" type="Node3D" parent="Room1/Deco"]
+transform = Transform3D(0.9828067, -8.070763e-09, -0.18463753, 8.070763e-09, 1, -7.515446e-10, 0.18463753, -7.515446e-10, 0.9828067, -0.34613252, -0.2070179, 4.9603806)
+
+[node name="fudge-clock-modern" parent="Room1/Deco/fudge-clock-modern" instance=ExtResource("2_77hqf")]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Room1/Deco/fudge-clock-modern"]
+stream = ExtResource("3_vh1de")
+volume_db = -8.475
+autoplay = true
+parameters/looping = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Room1/Deco"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.0823593)
@@ -409,6 +484,19 @@ transform = Transform3D(0.03238488, -0.013977124, -0.99937767, 0.9799675, 0.1970
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.41444397, 0)
 shape = SubResource("BoxShape3D_vh1de")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Room1"]
-transform = Transform3D(1, 0, 0, 0, 0.017208042, 0.99985194, 0, -0.99985194, 0.017208042, 0, 29.077059, -15.217667)
-shadow_enabled = true
+[node name="Water" type="Node3D" parent="Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.834805, 0)
+
+[node name="Area3D" type="Area3D" parent="Room1/Water"]
+gravity = -0.415
+script = ExtResource("6_8qtdo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room1/Water/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11, -1)
+shape = SubResource("BoxShape3D_ty37t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room1/Water"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11, -1)
+mesh = SubResource("BoxMesh_8qtdo")
+skeleton = NodePath("../Area3D")
+surface_material_override/0 = SubResource("StandardMaterial3D_ty37t")
