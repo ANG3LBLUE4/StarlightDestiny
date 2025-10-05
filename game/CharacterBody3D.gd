@@ -128,7 +128,7 @@ func _physics_process(delta):
 
 		# Gravity and wall slide
 		if not is_on_floor():
-			if is_on_wall():
+			if is_on_wall() or in_water:
 				velocity.y = max(velocity.y - 30.0 * delta, -5)
 			else:
 				velocity.y -= 30.0 * delta
