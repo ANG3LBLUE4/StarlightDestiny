@@ -11,6 +11,8 @@ extends CharacterBody3D
 @onready var stress_label = get_tree().current_scene.get_node("UI/Stress/StressLabel")
 @onready var hyjacked_overlay = get_tree().current_scene.get_node("UI/HyjackedOverlay/TextureRect")
 @onready var flash_overlay = get_tree().current_scene.get_node("UI/FlashOverlay/TextureRect")
+@onready var water_overlay = get_tree().current_scene.get_node("UI/WaterOverlay/TextureRect")
+@onready var hypoxia_overlay = get_tree().current_scene.get_node("UI/HypoxiaOverlay/TextureRect")
 @onready var audio_player := $AudioStreamPlayer
 @onready var pain_sfx := $Pain
 @onready var pain_extreme_sfx := $PainExtreme
@@ -18,6 +20,7 @@ extends CharacterBody3D
 @onready var panic_sfx := $Panic
 @onready var hyjacked_sfx := $Hyjacked
 @onready var death_sfx := $Death
+@onready var drowning_sfx := $Drowning
 
 @export var move_speed := 10.0
 @export var jump_velocity := 14.0
@@ -35,7 +38,9 @@ extends CharacterBody3D
 @export var stress_decrease := 1.5
 @export var panic_amount := 0.0
 @export var flash_amount := 0.0
-@export var death_screen_fade = 0.0
+@export var death_screen_fade := 0.0
+@export var wet_amount := 0.0
+@export var oxygen := 100.0
 
 var current_health := max_health
 var current_dashes := float(max_dashes)
@@ -243,7 +248,7 @@ func _process(delta: float) -> void:
 			current_health = clamp(current_health, 0.0, max_health)
 			health_regen_timer = 0.0
 	
-	# Effects overlay & pain handling
+	# Effects overlay & handling
 	if stress_amount >= 50:
 		lowmood_overlay.modulate.a = clamp(stress_amount-50, 0, 100) / 50.0
 	else:
@@ -267,6 +272,34 @@ func _process(delta: float) -> void:
 		flash_overlay.modulate.a = 0.0
 	flash_amount -= 10.0 * delta
 	flash_amount = clamp(flash_amount, 0, 10.0)
+	
+	if in_water:
+		wet_amount += 40.0 * delta
+		oxygen -= 5.0 * delta
+	else:
+		wet_amount -= 40.0 * delta
+		oxygen += 15.0 * delta
+	
+	wet_amount = clamp(wet_amount, 0 , 100)
+	oxygen = clamp(oxygen, 0 , 100)
+	
+	if wet_amount >= 0.0:
+		water_overlay.modulate.a = clamp(wet_amount, 0, 100.0) / 150.0
+		
+	if oxygen <= 60.0:
+		hypoxia_overlay.modulate.a = clamp(60-oxygen, 0, 100.0) / 60
+		var vol = -80 + clamp(60-oxygen, 0, 100) * 1.5
+		drowning_sfx.volume_db = clamp(vol, -80.0, -10)
+	else:
+		hypoxia_overlay.modulate.a = 0.0
+		drowning_sfx.volume_db = -80.0
+	
+	# Drowning
+	if oxygen <= 0.1:
+		current_health -= 1.0 * delta
+		current_hard_damage += 2.0 * delta
+		pain_amount += 10.0 * delta
+		stress_amount += 5.0 * delta
 		
 	# Death trigger
 	if current_health <= 0.1:

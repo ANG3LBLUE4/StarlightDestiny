@@ -10,6 +10,7 @@ func _ready() -> void:
 func _body_entered(body: Node3D):
 	if body.name == "STAR":
 		body.in_water = true
+		body.flash_amount = 1
 		splash_sfx.play()
 	
 	

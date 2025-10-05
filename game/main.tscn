@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://jaay4h84w4s7"]
+[gd_scene load_steps=22 format=3 uid="uid://jaay4h84w4s7"]
 
 [ext_resource type="Script" uid="uid://di52j3ch0askh" path="res://game/main.gd" id="1_405oh"]
 [ext_resource type="PackedScene" uid="uid://g3gu1kprmusy" path="res://game/player.tscn" id="1_gq7s7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://21eppjybhf0o" path="res://textures/painoverlay.png" id="3_itumj"]
 [ext_resource type="Texture2D" uid="uid://ehlyo331fuyx" path="res://textures/Untitled449_20250730160558.png" id="3_mebtl"]
 [ext_resource type="Texture2D" uid="uid://0ri8m1x7f680" path="res://textures/wateroverlay.png" id="3_tv0fx"]
+[ext_resource type="Texture2D" uid="uid://xb51xtqy5lm2" path="res://textures/hypoxiaoverlay.png" id="4_017dk"]
 [ext_resource type="FontFile" uid="uid://md6taw5jblc5" path="res://fonts/VCR_OSD_MONO_1.001.ttf" id="4_44qhu"]
 [ext_resource type="Script" uid="uid://1q552rg1h7cd" path="res://game/ui_shake.gd" id="4_ioaqv"]
 [ext_resource type="Texture2D" uid="uid://drrtxnkyqdoh5" path="res://textures/Untitled449_20250730185855.png" id="6_kd7l6"]
@@ -38,7 +39,6 @@ script = ExtResource("1_405oh")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="WaterOverlay" type="Control" parent="UI"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -50,6 +50,19 @@ layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = ExtResource("3_tv0fx")
+
+[node name="HypoxiaOverlay" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/HypoxiaOverlay"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("4_017dk")
 
 [node name="LowMoodOverlay" type="Control" parent="UI"]
 layout_mode = 3
