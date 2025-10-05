@@ -226,7 +226,7 @@ func _process(delta: float) -> void:
 		panic_sfx.volume_db = clamp(vol, -80.0, -10)
 	else:
 		panic_sfx.volume_db = -80.0
-
+		
 	# Health & hard damage
 	
 	if current_hard_damage > 0.0:

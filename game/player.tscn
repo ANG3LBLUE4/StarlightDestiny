@@ -1,13 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://g3gu1kprmusy"]
+[gd_scene load_steps=12 format=3 uid="uid://g3gu1kprmusy"]
 
 [ext_resource type="Script" uid="uid://bd206qghxxfsv" path="res://game/CharacterBody3D.gd" id="1_7ovo4"]
 [ext_resource type="Script" uid="uid://ptrnfgch2jc4" path="res://game/AudioStreamPlayer.gd" id="2_yse8p"]
 [ext_resource type="AudioStream" uid="uid://cyje7occcjye8" path="res://sounds/star-pain.mp3" id="3_du4nq"]
+[ext_resource type="AudioStream" uid="uid://k2g2otts2gp" path="res://sounds/star-splash.mp3" id="3_ry671"]
 [ext_resource type="AudioStream" uid="uid://pgy2qu7702tg" path="res://sounds/star-painextreme.mp3" id="4_p0vpi"]
 [ext_resource type="AudioStream" uid="uid://gbcp4ajsuald" path="res://sounds/star-desperation.mp3" id="5_4fto2"]
 [ext_resource type="AudioStream" uid="uid://cpwui160d5h4k" path="res://sounds/star-panic.mp3" id="6_wkljg"]
 [ext_resource type="AudioStream" uid="uid://wtv6oigs17jc" path="res://sounds/star-hyjacked.mp3" id="7_wkljg"]
 [ext_resource type="AudioStream" uid="uid://dqnwh641fq0oh" path="res://sounds/star-death.mp3" id="8_iyaem"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ry671"]
+size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iyaem"]
 margin = 0.0
@@ -20,6 +24,12 @@ script = ExtResource("1_7ovo4")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45646918, 0)
 
+[node name="CameraCollisionArea" type="Area3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.011069506, 0)
+
+[node name="CameraCollision" type="CollisionShape3D" parent="Camera3D/CameraCollisionArea"]
+shape = SubResource("BoxShape3D_ry671")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_iyaem")
 
@@ -29,6 +39,10 @@ shape = SubResource("CapsuleShape3D_iyaem")
 max_polyphony = 500
 bus = &"PlayerSFX"
 script = ExtResource("2_yse8p")
+
+[node name="Splash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ry671")
+bus = &"PlayerSFX"
 
 [node name="Pain" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_du4nq")
