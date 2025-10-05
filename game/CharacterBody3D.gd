@@ -276,6 +276,7 @@ func _process(delta: float) -> void:
 	if in_water:
 		wet_amount += 40.0 * delta
 		oxygen -= 5.0 * delta
+		stress_amount += 1.5 * delta
 	else:
 		wet_amount -= 40.0 * delta
 		oxygen += 15.0 * delta
