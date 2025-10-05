@@ -6,8 +6,8 @@ func _ready() -> void:
 	
 func _body_entered(body: Node3D):
 	if body.name == "STAR":
-		pass
+		body.in_water = true
 	
 func _body_exited(body: Node3D):
 	if body.name == "STAR":
-		pass
+		body.in_water = false

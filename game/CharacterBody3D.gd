@@ -48,6 +48,7 @@ var is_dashing := false
 var dash_direction := Vector3.ZERO
 var dash_bar_display_value := float(max_dashes)
 var hp_bar_display_value := float(max_health * 10)
+var in_water := false
 
 #Preloading sounds
 var sfx_dash := preload("res://sounds/star-dash.mp3")
@@ -97,14 +98,14 @@ func _physics_process(delta):
 		recharge_timer = 0.0
 
 	if is_dashing:
-		self.velocity = dash_direction * dash_speed
+		velocity = dash_direction * dash_speed
 		dash_timer -= delta
 		if dash_timer <= 0:
 			is_dashing = false
 	else:
 		# Horizontal movement
-		self.velocity.x = direction.x * move_speed
-		self.velocity.z = direction.z * move_speed
+		velocity.x = direction.x * move_speed
+		velocity.z = direction.z * move_speed
 
 		# Jumping & Wall jumping
 		if Input.is_action_just_pressed("jump"):
@@ -112,15 +113,15 @@ func _physics_process(delta):
 				if current_dashes >= 0.7:
 					var wall_normal = get_wall_normal()
 					var push_off = -wall_normal * move_speed * 1.5
-					self.velocity.x = push_off.x
-					self.velocity.z = push_off.z
-					self.velocity.y = jump_velocity
+					velocity.x = push_off.x
+					velocity.z = push_off.z
+					velocity.y = jump_velocity
 					if current_dashes <= max_dashes:
 						current_dashes -= 0.7
 						audio_player.stream = sfx_walljump
 						audio_player.play()
 			elif is_on_floor():
-				self.velocity.y = jump_velocity
+				velocity.y = jump_velocity
 				current_dashes -= 0.2
 				audio_player.stream = sfx_jump
 				audio_player.play()
@@ -128,12 +129,12 @@ func _physics_process(delta):
 		# Gravity and wall slide
 		if not is_on_floor():
 			if is_on_wall():
-				self.velocity.y = max(self.velocity.y - 30.0 * delta, -5)
+				velocity.y = max(velocity.y - 30.0 * delta, -5)
 			else:
-				self.velocity.y -= 30.0 * delta
+				velocity.y -= 30.0 * delta
 
 	if not is_on_floor():
-		landing_velocity_y = self.velocity.y
+		landing_velocity_y = velocity.y
 
 	# Dash modifiers
 	if current_dashes < max_dashes and not is_dashing:
@@ -154,7 +155,7 @@ func _physics_process(delta):
 	
 	# Fall damage
 	if not was_on_floor and is_on_floor():
-		if landing_velocity_y < -23.0:
+		if landing_velocity_y < -23.0 and not in_water:
 			var damage: float = clamp((-landing_velocity_y - 15.0) * 0.2, 0.0, 10.0)
 			audio_player.stream = sfx_hurt
 			audio_player.play()
