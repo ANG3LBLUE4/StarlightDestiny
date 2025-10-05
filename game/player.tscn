@@ -9,8 +9,10 @@
 [ext_resource type="AudioStream" uid="uid://wtv6oigs17jc" path="res://sounds/star-hyjacked.mp3" id="7_wkljg"]
 [ext_resource type="AudioStream" uid="uid://dqnwh641fq0oh" path="res://sounds/star-death.mp3" id="8_iyaem"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_yedsm"]
-size = Vector3(0.6, 1.6, 0.6)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iyaem"]
+margin = 0.0
+radius = 0.34
+height = 1.675
 
 [node name="STAR" type="CharacterBody3D"]
 script = ExtResource("1_7ovo4")
@@ -19,7 +21,7 @@ script = ExtResource("1_7ovo4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45646918, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_yedsm")
+shape = SubResource("CapsuleShape3D_iyaem")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 

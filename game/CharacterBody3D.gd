@@ -169,7 +169,11 @@ func _physics_process(delta):
 	was_on_floor = is_on_floor()
  
 	move_and_slide()
-	
+
+	if position.y < -150:
+		position = Vector3.ZERO
+		velocity = Vector3.ZERO
+
 func _process(delta: float) -> void:
 	
 	# UI loop
