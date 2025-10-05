@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bvl7n0x276t7w"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_77hqf"]
+load_path = "res://.godot/imported/Untitled453_20250731144208.png-d953388d3281d353f969843d69ca1b29.s3tc.ctex"
+
+[resource]
+diffuse_mode = 3
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = SubResource("CompressedTexture2D_77hqf")
+uv1_scale = Vector3(30.235, 20, 64)
+uv1_triplanar_sharpness = 0.732043
+uv1_world_triplanar = true
+texture_filter = 0

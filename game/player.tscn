@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://g3gu1kprmusy"]
+
+[ext_resource type="Script" uid="uid://bd206qghxxfsv" path="res://game/CharacterBody3D.gd" id="1_7ovo4"]
+[ext_resource type="Script" uid="uid://ptrnfgch2jc4" path="res://game/AudioStreamPlayer.gd" id="2_yse8p"]
+[ext_resource type="AudioStream" uid="uid://cyje7occcjye8" path="res://sounds/star-pain.mp3" id="3_du4nq"]
+[ext_resource type="AudioStream" uid="uid://pgy2qu7702tg" path="res://sounds/star-painextreme.mp3" id="4_p0vpi"]
+[ext_resource type="AudioStream" uid="uid://gbcp4ajsuald" path="res://sounds/star-desperation.mp3" id="5_4fto2"]
+[ext_resource type="AudioStream" uid="uid://cpwui160d5h4k" path="res://sounds/star-panic.mp3" id="6_wkljg"]
+[ext_resource type="AudioStream" uid="uid://wtv6oigs17jc" path="res://sounds/star-hyjacked.mp3" id="7_wkljg"]
+[ext_resource type="AudioStream" uid="uid://dqnwh641fq0oh" path="res://sounds/star-death.mp3" id="8_iyaem"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yedsm"]
+size = Vector3(0.6, 1.6, 0.6)
+
+[node name="STAR" type="CharacterBody3D"]
+script = ExtResource("1_7ovo4")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45646918, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_yedsm")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer3D" parent="."]
+max_polyphony = 500
+bus = &"PlayerSFX"
+script = ExtResource("2_yse8p")
+
+[node name="Pain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_du4nq")
+volume_db = -80.0
+autoplay = true
+bus = &"PlayerLoopingSFX"
+parameters/looping = true
+
+[node name="PainExtreme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_p0vpi")
+volume_db = -80.0
+autoplay = true
+bus = &"PlayerLoopingSFX"
+parameters/looping = true
+
+[node name="Stress" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_4fto2")
+volume_db = -80.0
+autoplay = true
+bus = &"PlayerLoopingSFX"
+parameters/looping = true
+
+[node name="Panic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_wkljg")
+volume_db = -80.0
+autoplay = true
+bus = &"PlayerLoopingSFX"
+parameters/looping = true
+
+[node name="Hyjacked" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_wkljg")
+volume_db = -5.0
+bus = &"PlayerLoopingSFX"
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_iyaem")
+volume_db = -5.0
+bus = &"DeathSFX"

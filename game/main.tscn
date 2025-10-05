@@ -1,0 +1,223 @@
+[gd_scene load_steps=20 format=3 uid="uid://jaay4h84w4s7"]
+
+[ext_resource type="Script" uid="uid://di52j3ch0askh" path="res://game/main.gd" id="1_405oh"]
+[ext_resource type="PackedScene" uid="uid://g3gu1kprmusy" path="res://game/player.tscn" id="1_gq7s7"]
+[ext_resource type="Texture2D" uid="uid://cb8pxx1swgb36" path="res://textures/Untitled449_20250730154130.png" id="3_1qb2v"]
+[ext_resource type="Texture2D" uid="uid://d4c8lovg2qlx2" path="res://textures/lowmood-overlay.png" id="3_frwyw"]
+[ext_resource type="Texture2D" uid="uid://21eppjybhf0o" path="res://textures/painoverlay.png" id="3_itumj"]
+[ext_resource type="Texture2D" uid="uid://ehlyo331fuyx" path="res://textures/Untitled449_20250730160558.png" id="3_mebtl"]
+[ext_resource type="FontFile" uid="uid://md6taw5jblc5" path="res://fonts/VCR_OSD_MONO_1.001.ttf" id="4_44qhu"]
+[ext_resource type="Script" uid="uid://1q552rg1h7cd" path="res://game/ui_shake.gd" id="4_ioaqv"]
+[ext_resource type="Texture2D" uid="uid://drrtxnkyqdoh5" path="res://textures/Untitled449_20250730185855.png" id="6_kd7l6"]
+[ext_resource type="Texture2D" uid="uid://dfp81v02uu12o" path="res://textures/Untitled449_20250730185841.png" id="7_b6jop"]
+[ext_resource type="Script" uid="uid://k0b3thr2lc5r" path="res://game/ui_shake_crosshair.gd" id="8_li27q"]
+[ext_resource type="Texture2D" uid="uid://dfs21cx4jv0jv" path="res://textures/crosshair.png" id="8_utblk"]
+[ext_resource type="Texture2D" uid="uid://dn08ttf1nq65j" path="res://textures/deathscreen.png" id="9_lx3aj"]
+[ext_resource type="Script" uid="uid://t0sm2yvbakdy" path="res://game/ui_shake_stress.gd" id="12_ioaqv"]
+[ext_resource type="Texture2D" uid="uid://gib54ysy1kkn" path="res://textures/flash.png" id="15_tv0fx"]
+[ext_resource type="Texture2D" uid="uid://de451hynoc7oh" path="res://textures/hyjacked-overlay.png" id="15_yyxey"]
+
+[sub_resource type="Theme" id="Theme_kyfjn"]
+default_font = ExtResource("4_44qhu")
+default_font_size = 22
+
+[sub_resource type="Theme" id="Theme_dc7as"]
+default_font = ExtResource("4_44qhu")
+default_font_size = 44
+
+[sub_resource type="Theme" id="Theme_inymf"]
+default_font = ExtResource("4_44qhu")
+default_font_size = 22
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_405oh")
+
+[node name="STAR" parent="." instance=ExtResource("1_gq7s7")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="LowMoodOverlay" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/LowMoodOverlay"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("3_frwyw")
+
+[node name="PainOverlay" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/PainOverlay"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("3_itumj")
+
+[node name="DashBarContainer" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -52.0
+offset_right = 55.0
+offset_bottom = -12.0
+grow_vertical = 0
+script = ExtResource("4_ioaqv")
+
+[node name="DashBar" type="TextureProgressBar" parent="UI/DashBarContainer"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -19.0
+offset_right = 381.0
+grow_vertical = 0
+max_value = 5.0
+step = 0.0
+value = 5.0
+nine_patch_stretch = true
+stretch_margin_left = 245
+texture_under = ExtResource("3_mebtl")
+texture_progress = ExtResource("3_1qb2v")
+
+[node name="DashLabel" type="Label" parent="UI/DashBarContainer"]
+visible = false
+modulate = Color(0.288518, 0.288518, 0.288518, 1)
+self_modulate = Color(0.290196, 0.290196, 0.290196, 1)
+layout_mode = 0
+offset_left = 9.0
+offset_top = 20.0
+offset_right = 77.0
+offset_bottom = 62.0
+theme = SubResource("Theme_kyfjn")
+text = "1"
+
+[node name="HPBarContainer" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -95.0
+offset_right = 55.0
+offset_bottom = -55.0
+grow_vertical = 0
+script = ExtResource("4_ioaqv")
+
+[node name="HPBar" type="TextureProgressBar" parent="UI/HPBarContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.075
+anchor_bottom = 1.075
+offset_top = -43.0
+offset_right = 381.0
+step = 0.0
+nine_patch_stretch = true
+texture_under = ExtResource("6_kd7l6")
+texture_progress = ExtResource("7_b6jop")
+
+[node name="HPLabel" type="Label" parent="UI/HPBarContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.13
+anchor_bottom = 1.13
+offset_top = -46.33
+offset_right = 78.0
+offset_bottom = -7.33001
+theme = SubResource("Theme_dc7as")
+text = "0"
+
+[node name="HDLabel" type="Label" parent="UI/HPBarContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.13
+anchor_bottom = 1.13
+offset_left = 301.0
+offset_top = -43.2
+offset_right = 379.0
+offset_bottom = -4.2
+theme = SubResource("Theme_inymf")
+theme_override_colors/font_color = Color(0.773856, 2.23808e-06, 9.62615e-07, 1)
+text = "0"
+
+[node name="Crosshair" type="TextureRect" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_utblk")
+script = ExtResource("8_li27q")
+
+[node name="Stress" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("12_ioaqv")
+
+[node name="StressLabel" type="Label" parent="UI/Stress"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 480.0
+offset_right = 165.0
+offset_bottom = 537.0
+theme_override_fonts/font = ExtResource("4_44qhu")
+theme_override_font_sizes/font_size = 64
+text = "0"
+
+[node name="HyjackedOverlay" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/HyjackedOverlay"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("15_yyxey")
+
+[node name="DeathScreen" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/DeathScreen"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("9_lx3aj")
+
+[node name="FlashOverlay" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/FlashOverlay"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("15_tv0fx")
+
+[node name="LevelManager" type="Node3D" parent="."]
