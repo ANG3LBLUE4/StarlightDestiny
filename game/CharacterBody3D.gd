@@ -1,16 +1,16 @@
 extends CharacterBody3D
 
-@onready var dash_bar = get_tree().root.get_node("Node3D/UI/DashBarContainer/DashBar")
-@onready var dash_label = get_tree().root.get_node("Node3D/UI/DashBarContainer/DashLabel")
-@onready var hp_bar = get_tree().root.get_node("Node3D/UI/HPBarContainer/HPBar")
-@onready var hp_label = get_tree().root.get_node("Node3D/UI/HPBarContainer/HPLabel")
-@onready var hd_label = get_tree().root.get_node("Node3D/UI/HPBarContainer/HDLabel")
-@onready var pain_overlay := get_tree().root.get_node("Node3D/UI/PainOverlay/TextureRect")
-@onready var lowmood_overlay := get_tree().root.get_node("Node3D/UI/LowMoodOverlay/TextureRect")
-@onready var death_screen = get_tree().root.get_node("Node3D/UI/DeathScreen")
-@onready var stress_label = get_tree().root.get_node("Node3D/UI/Stress/StressLabel")
-@onready var hyjacked_overlay = get_tree().root.get_node("Node3D/UI/HyjackedOverlay/TextureRect")
-@onready var flash_overlay = get_tree().root.get_node("Node3D/UI/FlashOverlay/TextureRect")
+@onready var dash_bar = get_tree().current_scene.get_node("UI/DashBarContainer/DashBar")
+@onready var dash_label = get_tree().current_scene.get_node("UI/DashBarContainer/DashLabel")
+@onready var hp_bar = get_tree().current_scene.get_node("UI/HPBarContainer/HPBar")
+@onready var hp_label = get_tree().current_scene.get_node("UI/HPBarContainer/HPLabel")
+@onready var hd_label = get_tree().current_scene.get_node("UI/HPBarContainer/HDLabel")
+@onready var pain_overlay := get_tree().current_scene.get_node("UI/PainOverlay/TextureRect")
+@onready var lowmood_overlay := get_tree().current_scene.get_node("UI/LowMoodOverlay/TextureRect")
+@onready var death_screen = get_tree().current_scene.get_node("UI/DeathScreen")
+@onready var stress_label = get_tree().current_scene.get_node("UI/Stress/StressLabel")
+@onready var hyjacked_overlay = get_tree().current_scene.get_node("UI/HyjackedOverlay/TextureRect")
+@onready var flash_overlay = get_tree().current_scene.get_node("UI/FlashOverlay/TextureRect")
 @onready var audio_player := $AudioStreamPlayer
 @onready var pain_sfx := $Pain
 @onready var pain_extreme_sfx := $PainExtreme
