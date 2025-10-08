@@ -21,6 +21,7 @@ extends CharacterBody3D
 @onready var hyjacked_sfx := $Hyjacked
 @onready var death_sfx := $Death
 @onready var drowning_sfx := $Drowning
+@onready var underwater_sfx := $Underwater
 
 @export var move_speed := 10.0
 @export var jump_velocity := 14.0
@@ -214,6 +215,7 @@ func _process(delta: float) -> void:
 			panic_amount = 0.0
 			$Hyjacked.stop()
 			flash_amount = 10.0
+			stress_amount -= 20.0
 		
 	if panic_amount >= 14.9:
 		current_health = 0.0
@@ -277,9 +279,15 @@ func _process(delta: float) -> void:
 		wet_amount += 40.0 * delta
 		oxygen -= 5.0 * delta
 		stress_amount += 1.5 * delta
+		var vol = -10
+		underwater_sfx.volume_db = clamp(vol, -80.0, -10)
+		AudioServer.set_bus_effect_enabled(4, 0, true)
 	else:
 		wet_amount -= 40.0 * delta
 		oxygen += 15.0 * delta
+		var vol = -80
+		underwater_sfx.volume_db = clamp(vol, -80.0, -10)
+		AudioServer.set_bus_effect_enabled(4, 0, false)
 	
 	wet_amount = clamp(wet_amount, 0 , 100)
 	oxygen = clamp(oxygen, 0 , 100)

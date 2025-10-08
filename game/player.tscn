@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://g3gu1kprmusy"]
+[gd_scene load_steps=14 format=3 uid="uid://g3gu1kprmusy"]
 
 [ext_resource type="Script" uid="uid://bd206qghxxfsv" path="res://game/CharacterBody3D.gd" id="1_7ovo4"]
 [ext_resource type="Script" uid="uid://ptrnfgch2jc4" path="res://game/AudioStreamPlayer.gd" id="2_yse8p"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://wtv6oigs17jc" path="res://sounds/star-hyjacked.mp3" id="7_wkljg"]
 [ext_resource type="AudioStream" uid="uid://dqnwh641fq0oh" path="res://sounds/star-death.mp3" id="8_iyaem"]
 [ext_resource type="AudioStream" uid="uid://bx4duj357vp5a" path="res://sounds/star-drowning.mp3" id="10_7fxs2"]
+[ext_resource type="AudioStream" uid="uid://pk43tbk40i7f" path="res://sounds/star-underwater.mp3" id="11_4uvqg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ry671"]
 size = Vector3(0.1, 0.1, 0.1)
@@ -88,4 +89,10 @@ stream = ExtResource("10_7fxs2")
 volume_db = -80.0
 autoplay = true
 bus = &"PlayerLoopingSFX"
+parameters/looping = true
+
+[node name="Underwater" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_4uvqg")
+volume_db = -80.0
+autoplay = true
 parameters/looping = true

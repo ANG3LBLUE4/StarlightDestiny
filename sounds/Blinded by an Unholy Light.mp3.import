@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bj1cyatuvunec"
+path="res://.godot/imported/Blinded by an Unholy Light.mp3-40da334602044b97ba09c3f762fad644.mp3str"
+
+[deps]
+
+source_file="res://sounds/Blinded by an Unholy Light.mp3"
+dest_files=["res://.godot/imported/Blinded by an Unholy Light.mp3-40da334602044b97ba09c3f762fad644.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
