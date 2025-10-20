@@ -1,19 +1,20 @@
 extends Area3D
 
-@onready var splash_sfx = get_tree().current_scene.get_node("STAR/Splash")
+@onready var splash_sfx = get_tree().current_scene.get_node("STAR/PlayerSFX/Splash")
+@onready var player = get_tree().current_scene.get_node("STAR")
 
 var value: int = 0
 
 func _ready() -> void:
-	body_entered.connect(_body_entered)
-	body_exited.connect(_body_exited)
+	area_entered.connect(_area_entered)
+	area_exited.connect(_area_exited)
 	
-func _body_entered(body: Node3D):
-	if body.name == "STAR":
-		body.in_water = true
-		body.flash_amount = 1
+func _area_entered(body: Node3D):
+	if body.name == "CameraCollisionArea":
+		player.in_water = true
+		player.flash_amount = 1
 		splash_sfx.play()
 	
-func _body_exited(body: Node3D):
-	if body.name == "STAR":
-		body.in_water = false
+func _area_exited(body: Node3D):
+	if body.name == "CameraCollisionArea":
+		player.in_water = false

@@ -1,18 +1,22 @@
-[gd_scene load_steps=14 format=3 uid="uid://g3gu1kprmusy"]
+[gd_scene load_steps=18 format=3 uid="uid://g3gu1kprmusy"]
 
 [ext_resource type="Script" uid="uid://bd206qghxxfsv" path="res://game/CharacterBody3D.gd" id="1_7ovo4"]
-[ext_resource type="Script" uid="uid://ptrnfgch2jc4" path="res://game/AudioStreamPlayer.gd" id="2_yse8p"]
+[ext_resource type="AudioStream" uid="uid://dmw1qjcnlltcx" path="res://sounds/star-dash.mp3" id="2_7vc3l"]
 [ext_resource type="AudioStream" uid="uid://cyje7occcjye8" path="res://sounds/star-pain.mp3" id="3_du4nq"]
+[ext_resource type="AudioStream" uid="uid://ccae2ia38v02t" path="res://sounds/star-grounded.mp3" id="3_qdgg6"]
 [ext_resource type="AudioStream" uid="uid://k2g2otts2gp" path="res://sounds/star-splash.mp3" id="3_ry671"]
+[ext_resource type="AudioStream" uid="uid://oxlpovoo0ua8" path="res://sounds/star-hurt.mp3" id="4_8kp1l"]
 [ext_resource type="AudioStream" uid="uid://pgy2qu7702tg" path="res://sounds/star-painextreme.mp3" id="4_p0vpi"]
 [ext_resource type="AudioStream" uid="uid://gbcp4ajsuald" path="res://sounds/star-desperation.mp3" id="5_4fto2"]
+[ext_resource type="AudioStream" uid="uid://bf5tatv16naku" path="res://sounds/star-jump.mp3" id="5_hobtg"]
+[ext_resource type="AudioStream" uid="uid://y0pyiw81n6l0" path="res://sounds/star-walljump.mp3" id="6_sghav"]
 [ext_resource type="AudioStream" uid="uid://cpwui160d5h4k" path="res://sounds/star-panic.mp3" id="6_wkljg"]
 [ext_resource type="AudioStream" uid="uid://wtv6oigs17jc" path="res://sounds/star-hyjacked.mp3" id="7_wkljg"]
 [ext_resource type="AudioStream" uid="uid://dqnwh641fq0oh" path="res://sounds/star-death.mp3" id="8_iyaem"]
 [ext_resource type="AudioStream" uid="uid://bx4duj357vp5a" path="res://sounds/star-drowning.mp3" id="10_7fxs2"]
 [ext_resource type="AudioStream" uid="uid://pk43tbk40i7f" path="res://sounds/star-underwater.mp3" id="11_4uvqg"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ry671"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_7vc3l"]
 size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iyaem"]
@@ -22,77 +26,99 @@ height = 1.675
 
 [node name="STAR" type="CharacterBody3D"]
 script = ExtResource("1_7ovo4")
+max_health = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45646918, 0)
 
-[node name="CameraCollisionArea" type="Area3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.011069506, 0)
+[node name="CameraCollisionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4418047, 0)
+collision_mask = 2
 
-[node name="CameraCollision" type="CollisionShape3D" parent="Camera3D/CameraCollisionArea"]
-shape = SubResource("BoxShape3D_ry671")
+[node name="CameraCollision" type="CollisionShape3D" parent="CameraCollisionArea"]
+shape = SubResource("BoxShape3D_7vc3l")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_iyaem")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer3D" parent="."]
-max_polyphony = 500
-bus = &"PlayerSFX"
-script = ExtResource("2_yse8p")
+[node name="PlayerSFX" type="Node" parent="."]
 
-[node name="Splash" type="AudioStreamPlayer" parent="."]
+[node name="Dash" type="AudioStreamPlayer" parent="PlayerSFX"]
+stream = ExtResource("2_7vc3l")
+bus = &"PlayerSFX"
+
+[node name="Grounded" type="AudioStreamPlayer" parent="PlayerSFX"]
+stream = ExtResource("3_qdgg6")
+bus = &"PlayerSFX"
+
+[node name="Hurt" type="AudioStreamPlayer" parent="PlayerSFX"]
+stream = ExtResource("4_8kp1l")
+bus = &"PlayerSFX"
+
+[node name="Jump" type="AudioStreamPlayer" parent="PlayerSFX"]
+stream = ExtResource("5_hobtg")
+bus = &"PlayerSFX"
+
+[node name="Walljump" type="AudioStreamPlayer" parent="PlayerSFX"]
+stream = ExtResource("6_sghav")
+bus = &"PlayerSFX"
+
+[node name="Splash" type="AudioStreamPlayer" parent="PlayerSFX"]
 stream = ExtResource("3_ry671")
 bus = &"PlayerSFX"
 
-[node name="Pain" type="AudioStreamPlayer" parent="."]
+[node name="PlayerLoopingSFX" type="Node" parent="."]
+
+[node name="Pain" type="AudioStreamPlayer" parent="PlayerLoopingSFX"]
 stream = ExtResource("3_du4nq")
 volume_db = -80.0
 autoplay = true
 bus = &"PlayerLoopingSFX"
 parameters/looping = true
 
-[node name="PainExtreme" type="AudioStreamPlayer" parent="."]
+[node name="PainExtreme" type="AudioStreamPlayer" parent="PlayerLoopingSFX"]
 stream = ExtResource("4_p0vpi")
 volume_db = -80.0
 autoplay = true
 bus = &"PlayerLoopingSFX"
 parameters/looping = true
 
-[node name="Stress" type="AudioStreamPlayer" parent="."]
+[node name="Stress" type="AudioStreamPlayer" parent="PlayerLoopingSFX"]
 stream = ExtResource("5_4fto2")
 volume_db = -80.0
 autoplay = true
 bus = &"PlayerLoopingSFX"
 parameters/looping = true
 
-[node name="Panic" type="AudioStreamPlayer" parent="."]
+[node name="Panic" type="AudioStreamPlayer" parent="PlayerLoopingSFX"]
 stream = ExtResource("6_wkljg")
 volume_db = -80.0
 autoplay = true
 bus = &"PlayerLoopingSFX"
 parameters/looping = true
 
-[node name="Hyjacked" type="AudioStreamPlayer" parent="."]
+[node name="Hyjacked" type="AudioStreamPlayer" parent="PlayerLoopingSFX"]
 stream = ExtResource("7_wkljg")
 volume_db = -5.0
 bus = &"PlayerLoopingSFX"
 
-[node name="Death" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_iyaem")
-volume_db = -5.0
-bus = &"DeathSFX"
-
-[node name="Drowning" type="AudioStreamPlayer" parent="."]
+[node name="Drowning" type="AudioStreamPlayer" parent="PlayerLoopingSFX"]
 stream = ExtResource("10_7fxs2")
 volume_db = -80.0
 autoplay = true
 bus = &"PlayerLoopingSFX"
 parameters/looping = true
 
-[node name="Underwater" type="AudioStreamPlayer" parent="."]
+[node name="Underwater" type="AudioStreamPlayer" parent="PlayerLoopingSFX"]
 stream = ExtResource("11_4uvqg")
 volume_db = -80.0
 autoplay = true
+bus = &"PlayerLoopingSFX"
 parameters/looping = true
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_iyaem")
+volume_db = -5.0
+bus = &"DeathSFX"

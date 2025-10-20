@@ -35,6 +35,7 @@ default_font_size = 22
 script = ExtResource("1_405oh")
 
 [node name="STAR" parent="." instance=ExtResource("1_gq7s7")]
+max_health = 10.0
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -51,6 +52,18 @@ offset_right = 1152.0
 offset_bottom = 648.0
 texture = ExtResource("3_tv0fx")
 
+[node name="LowMoodOverlay" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/LowMoodOverlay"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("3_frwyw")
+
 [node name="HypoxiaOverlay" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 0
@@ -63,18 +76,6 @@ layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = ExtResource("4_017dk")
-
-[node name="LowMoodOverlay" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/LowMoodOverlay"]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-texture = ExtResource("3_frwyw")
 
 [node name="PainOverlay" type="Control" parent="UI"]
 layout_mode = 3

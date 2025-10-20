@@ -13,15 +13,19 @@ extends CharacterBody3D
 @onready var flash_overlay = get_tree().current_scene.get_node("UI/FlashOverlay/TextureRect")
 @onready var water_overlay = get_tree().current_scene.get_node("UI/WaterOverlay/TextureRect")
 @onready var hypoxia_overlay = get_tree().current_scene.get_node("UI/HypoxiaOverlay/TextureRect")
-@onready var audio_player := $AudioStreamPlayer
-@onready var pain_sfx := $Pain
-@onready var pain_extreme_sfx := $PainExtreme
-@onready var stress_sfx := $Stress
-@onready var panic_sfx := $Panic
-@onready var hyjacked_sfx := $Hyjacked
+@onready var pain_sfx := $PlayerLoopingSFX/Pain
+@onready var pain_extreme_sfx := $PlayerLoopingSFX/PainExtreme
+@onready var stress_sfx := $PlayerLoopingSFX/Stress
+@onready var panic_sfx := $PlayerLoopingSFX/Panic
+@onready var hyjacked_sfx := $PlayerLoopingSFX/Hyjacked
 @onready var death_sfx := $Death
-@onready var drowning_sfx := $Drowning
-@onready var underwater_sfx := $Underwater
+@onready var drowning_sfx := $PlayerLoopingSFX/Drowning
+@onready var underwater_sfx := $PlayerLoopingSFX/Underwater
+@onready var dash_sfx: = $PlayerSFX/Dash
+@onready var grounded_sfx: = $PlayerSFX/Grounded
+@onready var hurt_sfx: = $PlayerSFX/Hurt
+@onready var jump_sfx: = $PlayerSFX/Jump
+@onready var walljump_sfx: = $PlayerSFX/Walljump
 
 @export var move_speed := 10.0
 @export var jump_velocity := 14.0
@@ -94,8 +98,7 @@ func _physics_process(delta):
 	# Dash
 	if Input.is_action_just_pressed("dash") and not is_dashing and floor(current_dashes) > 0:
 		is_dashing = true
-		audio_player.stream = sfx_dash
-		audio_player.play()
+		$PlayerSFX/Dash.play()
 		dash_timer = dash_time
 		dash_direction = direction
 		if dash_direction == Vector3.ZERO:
@@ -124,13 +127,11 @@ func _physics_process(delta):
 					velocity.y = jump_velocity
 					if current_dashes <= max_dashes:
 						current_dashes -= 0.7
-						audio_player.stream = sfx_walljump
-						audio_player.play()
+						$PlayerSFX/Walljump.play()
 			elif is_on_floor():
 				velocity.y = jump_velocity
 				current_dashes -= 0.2
-				audio_player.stream = sfx_jump
-				audio_player.play()
+				$PlayerSFX/Jump.play()
 
 		# Gravity and wall slide
 		if not is_on_floor():
@@ -163,15 +164,13 @@ func _physics_process(delta):
 	if not was_on_floor and is_on_floor():
 		if landing_velocity_y < -23.0 and not in_water:
 			var damage: float = clamp((-landing_velocity_y - 15.0) * 0.2, 0.0, 10.0)
-			audio_player.stream = sfx_hurt
-			audio_player.play()
+			$PlayerSFX/Hurt.play()
 			current_health -= damage
 			current_hard_damage += damage
 			pain_amount += damage*12.0
 			current_health = clamp(current_health, 0.0, max_health)
 		else:
-			audio_player.stream = sfx_grounded
-			audio_player.play()
+			$PlayerSFX/Grounded.play()
 		landing_velocity_y = 0.0
 	was_on_floor = is_on_floor()
  
@@ -209,11 +208,11 @@ func _process(delta: float) -> void:
 	if stress_amount >= 99.9:
 		panic_amount += 1.0 * delta
 		if not hyjacked_sfx.playing:
-			$Hyjacked.play(0.0)
+			$PlayerLoopingSFX/Hyjacked.play(0.0)
 	else:
 		if hyjacked_sfx.playing:
 			panic_amount = 0.0
-			$Hyjacked.stop()
+			$PlayerLoopingSFX/Hyjacked.stop()
 			flash_amount = 10.0
 			stress_amount -= 20.0
 		
@@ -317,6 +316,7 @@ func _process(delta: float) -> void:
 			death_screen_fade = 8.0
 			AudioServer.set_bus_volume_linear(1, 0.0)
 			AudioServer.set_bus_volume_linear(2, 0.0)
+			AudioServer.set_bus_volume_linear(4, 0.0)
 			death_sfx.play()
 			flash_amount += 10.0
 		death_screen.modulate = Color(1-(death_screen_fade/8), 1-(death_screen_fade/8), 1-(death_screen_fade/8))
