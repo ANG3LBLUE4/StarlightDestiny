@@ -275,14 +275,14 @@ func _process(delta: float) -> void:
 	flash_amount = clamp(flash_amount, 0, 10.0)
 	
 	if in_water:
-		wet_amount += 40.0 * delta
+		wet_amount = 100.0
 		oxygen -= 5.0 * delta
 		stress_amount += 1.5 * delta
 		var vol = -10
 		underwater_sfx.volume_db = clamp(vol, -80.0, -10)
 		AudioServer.set_bus_effect_enabled(4, 0, true)
 	else:
-		wet_amount -= 40.0 * delta
+		wet_amount -= 50.0 * delta
 		oxygen += 15.0 * delta
 		var vol = -80
 		underwater_sfx.volume_db = clamp(vol, -80.0, -10)

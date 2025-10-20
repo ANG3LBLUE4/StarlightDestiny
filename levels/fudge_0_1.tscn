@@ -525,11 +525,11 @@ gravity = -0.415
 script = ExtResource("6_8qtdo")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Room1/Water/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -14.096855, -23.030039)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -14.096855, -22.868649)
 shape = SubResource("BoxShape3D_ty37t")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Room1/Water/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -14.096855, -23.030039)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -14.096855, -22.868649)
 mesh = SubResource("BoxMesh_8qtdo")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_ty37t")
