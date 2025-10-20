@@ -59,6 +59,8 @@ var dash_direction := Vector3.ZERO
 var dash_bar_display_value := float(max_dashes)
 var hp_bar_display_value := float(max_health * 10)
 var in_water := false
+var pain_pulse := 0.0
+var pulse_up
 
 #Preloading sounds
 var sfx_dash := preload("res://sounds/star-dash.mp3")
@@ -256,7 +258,7 @@ func _process(delta: float) -> void:
 		lowmood_overlay.modulate.a = 0.0
 		
 	if pain_amount >= 40:
-		pain_overlay.modulate.a = clamp(pain_amount-40, 0, 400) / 50.0
+		pain_overlay.modulate.a = clamp((pain_amount+pain_pulse/2)-50, 0, 400) / 40.0
 	else:
 		pain_overlay.modulate.a = 0.0
 	if pain_amount > 0:
@@ -274,6 +276,19 @@ func _process(delta: float) -> void:
 	flash_amount -= 10.0 * delta
 	flash_amount = clamp(flash_amount, 0, 10.0)
 	
+	# Pain pulse effect
+	if pain_pulse <= 0.1:
+		pulse_up = 1.0
+	if pain_pulse >= 20.0:
+		pulse_up = 0.0
+	
+	if pulse_up == 1.0:
+		pain_pulse += 25.0 * delta
+	else:
+		pain_pulse -= 25.0 * delta
+	
+	clamp(pain_pulse,0.0,20.0)
+	
 	if in_water:
 		wet_amount = 100.0
 		oxygen -= 5.0 * delta
@@ -281,12 +296,14 @@ func _process(delta: float) -> void:
 		var vol = -10
 		underwater_sfx.volume_db = clamp(vol, -80.0, -10)
 		AudioServer.set_bus_effect_enabled(4, 0, true)
+		AudioServer.set_bus_effect_enabled(2, 0, true)
 	else:
 		wet_amount -= 50.0 * delta
 		oxygen += 15.0 * delta
 		var vol = -80
 		underwater_sfx.volume_db = clamp(vol, -80.0, -10)
 		AudioServer.set_bus_effect_enabled(4, 0, false)
+		AudioServer.set_bus_effect_enabled(2, 0, false)
 	
 	wet_amount = clamp(wet_amount, 0 , 100)
 	oxygen = clamp(oxygen, 0 , 100)
